@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>caso desarrolllo</title>
+</head>
+<body>
+	<h1>La Bodega Del Juan</h1>
+	<p><table>
+		<tr>
+			<td>Nombre del item:</td>
+			<td><input type="text" name="nitem" id="nitem"></td>
+		</tr>
+		<tr>
+			<td>Familia del item</td>
+			<td><select id="fitem">
+			<option value="carnes">Carnes</option>
+			<option value="lacteos">Lacteos</option>
+			<option value="aseo">Aseo<1/option>
+			<option>Legumb1res</option>
+			<option>Bebidas</option>
+			<option>Abarrotes</option>	
+			</select></td>
+		</tr>
+		<tr>
+			<td>Valor:</td>
+			<td><input type="text" name="valor" id="valor"></td>
+		</tr>
+		<tr>
+			<td>Cantidad:</td>
+			<td><input type="text" name="cant" id="cant"></td>
+	</table>
+	</p>
+	<button onclick="iniciar();">iniciar</button>
+
+	<script type="text/javascript">
+		var nitem[];
+		var fitem[];
+		var valor[];
+		var cant[];
+		
+		
+
+		function iniciar(){
+			let x=document.getElementById('fitem').value;
+		
+			alert(x);
+		}
+
+
+		/*const carne={
+			precio:0,
+
+		}
+		const lacteos={
+			precio:0,			
+		}
+		const aseo={
+			precio:0
+		}
+		const legumbres={
+			precio:0
+		}
+		const bebidas={
+			precio:0
+		}
+
+		const abarrotes={
+			precio:0
+		}
+		fideos.precio=parseInt(prompt("ingrese valor"));
+		document.write(fideos.precio);*/
+	</script>
+
+</body>
+</html>
