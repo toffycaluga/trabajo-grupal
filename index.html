@@ -1,76 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>caso desarrolllo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="widtg-device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    table ,tr,td{
+      border:1px solid white;
+    }
+  </style>
+  <title>caso desarrolllo M2C7</title>
 </head>
 <body>
-	<h1>La Bodega Del Juan</h1>
-	<p><table>
-		<tr>
-			<td>Nombre del item:</td>
-			<td><input type="text" name="nitem" id="nitem"></td>
-		</tr>
-		<tr>
-			<td>Familia del item</td>
-			<td><select id="fitem">
-			<option value="carnes">Carnes</option>
-			<option value="lacteos">Lacteos</option>
-			<option value="aseo">Aseo<1/option>
-			<option>Legumb1res</option>
-			<option>Bebidas</option>
-			<option>Abarrotes</option>	
-			</select></td>
-		</tr>
-		<tr>
-			<td>Valor:</td>
-			<td><input type="text" name="valor" id="valor"></td>
-		</tr>
-		<tr>
-			<td>Cantidad:</td>
-			<td><input type="text" name="cant" id="cant"></td>
-	</table>
-	</p>
-	<button onclick="iniciar();">iniciar</button>
+  <div class="container-fluid p-5 bg-dark text-white text-center">
+  <h1> Central de Abastos <br> "La Bodega del Juan"</h1>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-4 text-left">
+        <div class="row pt-2">
+                    <div class="col">
+                        <label for="producto" class="form-label">Categoría:</label>
+                        <div class="dropdown">
+                           <select class="form-select" name="Escoger Ctegoría" id="fitem">
+                            <option value="" disabled selected> Escoger Categoría</option>
+                            <option value="Carnes">Carnes</option>
+                            <option value="Lacteos">Lacteos</option>
+                            <option value="Aseo">Aseo</option>
+                            <option value= "Bebidas">Bebidas</option>
+                            <option value= "Abarrotes">Abarrotes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="cantidad" class="form-label">Cantidad: </label>
+                        <input type="text" class="form-control" name="cantidad" id="cant" placeholder="Ingrese la cantidad"  required>
+                    </div>
+                </div>
 
-	<script type="text/javascript">
-		var nitem[];
-		var fitem[];
-		var valor[];
-		var cant[];
-		
-		
+                <div class="row">
+                    <div class="col">
+                        <label for="producto" class="form-label">Producto:</label>
+                        <input type="text" class="form-control" placeholder="Ingrese un producto" name="nitem" id="nitem" required>
+                    </div>
+                    <div class="col">
+                        <label for="valor" class="form-label">Valor:</label>
+                        <input type="text" class="form-control" placeholder="Ingrese el precio"id="valor" name="valor" required>
+                    </div>
+                </div><br>
 
-		function iniciar(){
-			let x=document.getElementById('fitem').value;
-		
-			alert(x);
-		}
+  <button onclick="agregar()"class="btn btn-primary">Agregar</button>
+  <button onclick="suma()"class="btn btn-primary">Total</button>
+</p> 
+</div>
+ <div class="col-sm-4" >
+  <p id="ar">
+  </p>
+</div>
+ <div class="col-sm-4">
+  <p id="total">
+    </p>
+</div>
+  <script type="text/javascript">
+    var nitem=[];
+    var fitem=[];
+    var valor=[];
+    var cant=[];
+    var tcant=0;
+    var total=0;
+    
 
+    function agregar(){
+            let vnitem=document.getElementById("nitem").value;
+            let vfitem=document.getElementById("fitem").value;
+            let vvalor=document.getElementById("valor").value;
+            let vcant=document.getElementById("cant").value;
+            
+      nitem.push(vnitem);
+      fitem.push(vfitem);
+      valor.push(vvalor);
+      cant.push(vcant);
 
-		/*const carne={
-			precio:0,
+      document.getElementById("nitem").value="";
+      if (fitem.length < 21 ){
+        llenar();
+      }else{
+        alert("stock maximo permitido");
+      }
 
-		}
-		const lacteos={
-			precio:0,			
-		}
-		const aseo={
-			precio:0
-		}
-		const legumbres={
-			precio:0
-		}
-		const bebidas={
-			precio:0
-		}
+  }
+function suma(){
+  for (let i = 0; i < fitem.length; i++) {
+    tcant=tcant+parseInt(cant[i]);
+    total=total+(parseInt(valor[i])*parseInt(cant[i]));
 
-		const abarrotes={
-			precio:0
-		}
-		fideos.precio=parseInt(prompt("ingrese valor"));
-		document.write(fideos.precio);*/
-	</script>
+  }
+document.getElementById('total').innerHTML="Total Productos en Bodega: "+tcant+"<br><br> Valor Total Existencia: $ "+total;
+
+}
+
+function llenar(){
+      let fragmento="";
+      fragmento="<table  class='table table-striped'border='1'>";
+      fragmento+="<tr> <td>Producto</td> <td>Categoría</td> <td>Cantidad</td> <td>valor</td> </tr>";
+      for (var i = 0; i < fitem.length; i++) {
+        fragmento+="<tr><td>"+nitem[i]+"</td><td>"+fitem[i]+"</td><td>"+cant[i]+"</td><td>"+valor[i]+"</td> </tr>";
+        } 
+      fragmento+="</table>";
+      document.getElementById('ar').innerHTML=fragmento;
+    }
+  </script>
 
 </body>
 </html>
