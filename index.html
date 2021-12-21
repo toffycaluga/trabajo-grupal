@@ -67,8 +67,7 @@
     var fitem=[];
     var valor=[];
     var cant=[];
-    var tcant=0;
-    var total=0;
+    
     
 
     function agregar(){
@@ -91,6 +90,8 @@
 
   }
 function suma(){
+  let tcant=0;
+  let total=0;
   for (let i = 0; i < fitem.length; i++) {
     tcant=tcant+parseInt(cant[i]);
     total=total+(parseInt(valor[i])*parseInt(cant[i]));
