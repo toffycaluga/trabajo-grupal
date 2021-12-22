@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width-device-width, initial-scale=1">
+  <meta name="viewport" content="widtg-device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js">
+  </script>
   <style>
-    table ,tr,td{
-      border:1px solid white;
+    table,
+    tr,
+    td {
+      border: 1px solid white;
     }
   </style>
   <title>caso desarrolllo M2C7</title>
 </head>
+
 <body>
-  <div class="container-fluid p-5 bg-dark text-white text-center">
-  <h1> Central de Abastos <br> "La Bodega del Juan"</h1>
+  <div class="container-fluid p-5 bg-success text-white text-center">
+    <h1> Central de Abastos <br> "La Bodega del Juan"</h1>
   </div>
   <div class="container mt-5">
     <div class="row">
       <div class="col-sm-4 text-left">
         <div class="row pt-2">
                     <div class="col">
-                        <label for="producto" class="form-label">Categoría:</label>
+                        <label for="producto" class="form-label">Categoría</label>
                         <div class="dropdown">
-                           <select class="form-select" name="Escoger Ctegoría" id="fitem">
+                           <select class="form-select" name="Escoger Categoría" id="fitem">
                             <option value="" disabled selected> Escoger Categoría</option>
                             <option value="Carnes">Carnes</option>
                             <option value="Lacteos">Lacteos</option>
@@ -34,25 +39,34 @@
                         </div>
                     </div>
                     <div class="col">
-                        <label for="cantidad" class="form-label">Cantidad: </label>
+                        <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="text" class="form-control" name="cantidad" id="cant" placeholder="Ingrese la cantidad"  required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <label for="producto" class="form-label">Producto:</label>
+                        <label for="producto" class="form-label">Producto</label>
                         <input type="text" class="form-control" placeholder="Ingrese un producto" name="nitem" id="nitem" required>
                     </div>
                     <div class="col">
-                        <label for="valor" class="form-label">Valor:</label>
+                        <label for="valor" class="form-label">Valor</label>
                         <input type="text" class="form-control" placeholder="Ingrese el precio"id="valor" name="valor" required>
                     </div>
-                </div><br>
+                </div><br><br>
 
-  <button onclick="agregar()"class="btn btn-primary">Agregar</button>
-  <button onclick="suma()"class="btn btn-primary">Total</button>
+  <button onclick="agregar2()"class="btn btn-success">Agregar Producto</button>
+  <button onclick="suma()"class="btn btn-success" disabled >Actualizar Stock</button><br><br>
+  <h3>Descontar Productos</h3>
+        
+  
+  <!--espacio para eliminar  -->
+  Nombre de Producto<input type="text" name="po" id="po"><br><br>
+  Cantidad a descontar<input type="text" name="va" id="va"><br>
+  <button onclick="descontar()" class="btn btn-success">Descontar</button>
 </p> 
+
+
 </div>
  <div class="col-sm-4" >
   <p id="ar">
@@ -62,24 +76,76 @@
   <p id="total">
     </p>
 </div>
+
   <script type="text/javascript">
+
     var nitem=[];
     var fitem=[];
     var valor=[];
     var cant=[];
-    
-    
+   
+    function descontar(){
+      let prodBusc=document.getElementById('po').value; //buscar producto a sacar
+      if(contiene(prodBusc,nitem)){
+        //alert("Existe en el registro "+nombre.indexOf(prodBusc));
+        let posReg=nitem.indexOf(prodBusc);
+        let cantDesc=parseInt(document.getElementById('va').value);
+        //alert("posReg :"+posReg+" Cantidad a descontar :"+cantDesc+ "Cantidad en registro :"+cant[posReg]);
+        if(cant[posReg]>=cantDesc){
+          //alert("Se puede descontar");
+          let newCantidad=cant[posReg] - cantDesc;
+          cant[posReg]=newCantidad;
+          llenar();
+        
+        }else{
+          alert("No existe inventario suficiente para descontar");
+        }
+      }else{
+        alert("No existe");
+      }
 
-    function agregar(){
-            let vnitem=document.getElementById("nitem").value;
-            let vfitem=document.getElementById("fitem").value;
-            let vvalor=document.getElementById("valor").value;
-            let vcant=document.getElementById("cant").value;
-            
+    }
+    function contiene(cadena, arreglo){
+       //si "cadena" se encuentra en "arreglo" devuelve true, en caso contrario devuelve false
+       return(arreglo.indexOf(cadena) > -1);
+     }
+
+
+    function modificar(){
+      let va=document.getElementById("va").value;
+      let po=document.getElementById("po").value;
+      cant[po]=parseInt(cant[po])-parseInt(va);
+      llenar();
+    }
+    function agregar2(){//en esta funcion se revisa si el producto a ingresar ya existe en el registro y si es asi suma la cantidad de items al producto existente 
+       let prodBusc=document.getElementById('nitem').value;
+       let vnitem=document.getElementById("nitem").value;
+      if(contiene(vnitem,nitem)){
+        //alert("Existe en el registro "+nombre.indexOf(prodBusc));
+        let posReg=nitem.indexOf(prodBusc);
+        let cantDesc=parseInt(document.getElementById('cant').value);
+          //alert("Se puede descontar");
+          let newCantidad=parseInt(cant[posReg]) + cantDesc;
+          cant[posReg]=newCantidad;
+
+          llenar();
+      }else{
+        agregar();
+      
+      
+      }
+    }
+
+    function agregar(){//esta funcion agrega elementos a los arreglos 
+      let vnitem=document.getElementById("nitem").value;
+      let vfitem=document.getElementById("fitem").value;
+      let vvalor=document.getElementById("valor").value;
+      let vcant=document.getElementById("cant").value;
       nitem.push(vnitem);
       fitem.push(vfitem);
       valor.push(vvalor);
       cant.push(vcant);
+      
 
       document.getElementById("nitem").value="";
       if (fitem.length < 21 ){
@@ -88,8 +154,12 @@
         alert("stock maximo permitido");
       }
 
-  }
-function suma(){
+
+
+
+
+    }
+function suma(){//esta funcion suma cantidad de productos y calcula el valor total
   let tcant=0;
   let total=0;
   for (let i = 0; i < fitem.length; i++) {
@@ -97,20 +167,44 @@ function suma(){
     total=total+(parseInt(valor[i])*parseInt(cant[i]));
 
   }
-document.getElementById('total').innerHTML="Total Productos en Bodega: "+tcant+"<br><br> Valor Total Existencia: $ "+total;
+  let res="<tr><td>Total productos en bodega</td><td>"+tcant+"</td></tr>";
+      res+="<tr><td>Valor Total Existencia </td><td>$"+total+"</td></tr>";
 
+return res;
+}
+function suma2(){//en esta funcion se usa para retornar valor total y ser utilizada luego en la funcion iva
+  let tcant=0;
+  let total=0;
+  for (let i = 0; i < fitem.length; i++) {
+    tcant=tcant+parseInt(cant[i]);
+    total=total+(parseInt(valor[i])*parseInt(cant[i]));
+
+  }
+
+return total;
+}
+function iva(){//en esta funcion se calcula el valor iva y retornando valores para la tabla final
+  let miva=suma2()*1.19;
+  let siva=suma2()*0.19;
+  let res="<tr><td>iva: </td><td>$"+siva+"</td></tr>"
+      res+="<tr><td>Total mas iva: </td><td>$"+miva+"</td></tr>"
+  return res;
 }
 
-function llenar(){
+function llenar(){//en esta funcion se utiliza para llenar los valores en una tabla y asi mostrar productos actuales
       let fragmento="";
       fragmento="<table  class='table table-striped'border='1'>";
-      fragmento+="<tr> <td>Producto</td> <td>Categoría</td> <td>Cantidad</td> <td>valor</td> </tr>";
+      fragmento+="<tr><td>Código producto</td> <td>Producto</td> <td>Categoría</td> <td>Cantidad</td> <td>valor</td> </tr>";
       for (var i = 0; i < fitem.length; i++) {
-        fragmento+="<tr><td>"+nitem[i]+"</td><td>"+fitem[i]+"</td><td>"+cant[i]+"</td><td>"+valor[i]+"</td> </tr>";
+        fragmento+="<tr><td>"+i+"</td><td>"+nitem[i]+"</td><td>"+fitem[i]+"</td><td>"+cant[i]+"</td><td>$"+valor[i]+"</td> </tr>";
         } 
+      fragmento+=suma();
+      fragmento+=iva();
       fragmento+="</table>";
+      
       document.getElementById('ar').innerHTML=fragmento;
     }
+    
   </script>
 
 </body>
